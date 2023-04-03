@@ -1,2 +1,14 @@
-<h1>Pages#home</h1>
-<p>Find me in app/views/pages/home.html.erb</p>
+<div class="row justify-content-center">
+  <div class="col-sm-8 my-3">
+    <h1>Job scrape</h1>
+    <%= form_tag(scrape_jobs_path, method: :get) do %>
+      <%= label_tag(:keyword, 'Keyword:') %>
+      <%= text_field_tag(:keyword) %>
+
+      <%= label_tag(:page_no, 'Page Number:') %>
+      <%= number_field_tag(:page_no) %>
+
+      <%= submit_tag('Scrape jobs') %>
+    <% end %>
+  </div>
+</div>
