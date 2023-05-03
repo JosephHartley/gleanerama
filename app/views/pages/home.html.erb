@@ -1,6 +1,6 @@
 <div class="row justify-content-center">
   <div class="col-sm-8 my-3">
-    <h1>Job scrape</h1>
+    <h2>Job scrape</h2>
     <%= form_tag(scrape_jobs_path, method: :get) do %>
       <%= label_tag(:keyword, 'Keyword:') %>
       <%= text_field_tag(:keyword) %>
@@ -9,6 +9,20 @@
       <%= number_field_tag(:page_no) %>
 
       <%= submit_tag('Scrape jobs') %>
+    <% end %>
+  </div>
+  <div class="col-sm-8 my-3">
+    <h2>Results scrape</h2>
+    <%= form_tag(total_jobs_path, method: :get) do %>
+      <%= label_tag(:keyword, 'Keyword/title:') %>
+      <%= text_field_tag(:keyword) %>
+
+      <%= label_tag(:min_salary, 'Min salary:') %>
+      <%= number_field_tag(:min_salary) %>
+      <%= label_tag(:max_salary, 'Max salary:') %>
+      <%= number_field_tag(:max_salary) %>
+
+      <%= submit_tag('Show results') %>
     <% end %>
   </div>
 </div>

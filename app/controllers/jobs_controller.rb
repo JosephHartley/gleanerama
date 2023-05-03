@@ -3,9 +3,11 @@ class JobsController < ApplicationController
   require 'nokogiri'
 
   def scrape
-    @jobs = scrape_jobs(params[:keyword], params[:page_no])
-    @keyword = params[:keyword]
-    @page_no = params[:page_no].to_i
+    scrape_jobs(params[:keyword], params[:page_no])
+  end
+
+  def total
+    scrape_total(params[:keyword], params[:min_salary], params[:max_salary])
   end
 
   def index
@@ -46,7 +48,15 @@ class JobsController < ApplicationController
 
   private
 
-  def scrape_jobs (keyword, page_no)
+  def scrape_total(keyword, min_salary, max_salary)
+    @link = "https://www.charityjob.co.uk/jobs?keywords=#{keyword}&location=london&radius=20&contracttype=full-time&minsalary=#{min_salary}&maxsalary=#{max_salary}&employerType=direct-employer"
+    html = URI.open("https://www.charityjob.co.uk/jobs?keywords=#{keyword}&location=london&radius=20&contracttype=full-time&minsalary=#{min_salary}&maxsalary=#{max_salary}&employerType=direct-employer").read
+    doc = Nokogiri::HTML(html, nil, 'utf-8')
+    span = doc.at_css('div.search-summary-text span')
+    @results = span.text.to_i
+  end
+
+  def scrape_jobs(keyword, page_no)
     html = URI.open("https://www.charityjob.co.uk/jobs?keywords=#{keyword}&location=london&radius=20&contracttype=full-time&minsalary=32000&days=7&employerType=direct-employer&page=#{page_no}").read
     doc = Nokogiri::HTML(html, nil, 'utf-8')
     results = []
